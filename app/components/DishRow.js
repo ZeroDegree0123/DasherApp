@@ -18,6 +18,12 @@ export default function DishRow({id, name, description, price, image}) {
         dispatch(addToCart({id, name, description, price, image}));
     }
 
+    const removeItemFromCart = () => {
+        if (!items.length > 0) return;
+
+        dispatch(removeFromCart({ id }));
+    }
+
     console.log(items)
     return (
         <>
@@ -39,8 +45,8 @@ export default function DishRow({id, name, description, price, image}) {
             {isPressed && (
                 <View className="bg-white px-4">
                     <View className="flex-row items-center space-x-2 pb-3">
-                        <TouchableOpacity onPress={removeFromCart}>
-                            <AntDesign name="minuscircleo" size={24} color={colors.primary} />
+                        <TouchableOpacity onPress={removeItemFromCart}>
+                            <AntDesign name="minuscircleo" size={24} color={items.length > 0 ? colors.primary : "gray"} />
                         </TouchableOpacity>
 
                         <Text>{items.length}</Text>
