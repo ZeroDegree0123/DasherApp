@@ -1,17 +1,27 @@
-import React, { useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import {Image, ScrollView, Text, TouchableOpacity, View} from "react-native"
 import { NativeWindStyleSheet } from "nativewind";
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { Ionicons, AntDesign, FontAwesome, EvilIcons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
 
+import { setRestaurant } from '../../features/restaurantSlice';
 import { urlFor } from '../../sanity';
 import colors from '../config/colors';
 import DishRow from '../components/DishRow';
 import CartIcon from '../components/CartIcon';
 
 export default function RestaurantScreen() {
-  const navigation = useNavigation();
+  // const { params: {restaurant, imgUrl} } = useRoute();
   const { params: {restaurant, imgUrl} } = useRoute();
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setRestaurant({
+      restaurant
+    }));
+  }, [])  
   
   useLayoutEffect(() => {
     navigation.setOptions({
