@@ -4,7 +4,7 @@ const initialState = {
   restaurant: {
     id: null,
     imgUrl: null,
-    title: null,
+    name: null,
     rating: null,
     genre: null,
     address: null,
