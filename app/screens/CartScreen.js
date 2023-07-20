@@ -87,7 +87,7 @@ export default function CartScreen() {
         </View>
 
 
-        <TouchableOpacity className="rounded-lg bg-[#00CCBB] p-4 mx-4">
+        <TouchableOpacity className="rounded-lg bg-[#00CCBB] p-4 mx-4" onPress={() => navigation.navigate("LoadingOrder")}>
           <Text className="text-center text-white text-lg font-bold">Place Order</Text>
         </TouchableOpacity>
 
