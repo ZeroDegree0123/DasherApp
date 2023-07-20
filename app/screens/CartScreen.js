@@ -5,16 +5,17 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Entypo } from '@expo/vector-icons';
 
-import { removeFromCart, selectCartItems } from '../../features/cartSlice';
+import { removeFromCart, selectCartItems, selectCartTotal } from '../../features/cartSlice';
 import { selectRestaurant } from '../../features/restaurantSlice';
 import { urlFor } from '../../sanity';
 import colors from '../config/colors';
 
 export default function CartScreen() {
+  const [groupItems, setGroupItems] = useState([]);
   const navigation = useNavigation();
   const restaurant = useSelector(selectRestaurant);
   const items = useSelector(selectCartItems);
-  const [groupItems, setGroupItems] = useState([]);
+  const cartTotal = useSelector(selectCartTotal);
   const dispatch = useDispatch();
 
   useMemo(() => {
@@ -53,10 +54,11 @@ export default function CartScreen() {
             <Text className="text-[#00CCBB]">Change</Text>
           </TouchableOpacity>
         </View>
-        <ScrollView>
+
+        <ScrollView className="divide-y divide-gray-200">
           {Object.entries(groupItems).map(([key, items]) => (
-            <View key= {key}>
-              <Text>{items.length} x</Text>
+            <View className="flex-row items-center space-x-3 bg-white py-2 px-5" key={key}>
+              <Text style={{color: colors.primary}}>{items.length} x</Text>
               <Image className="h-12 w-12 rounded-full" source={{ uri: urlFor(items[0]?.image).url()}}/>
               <Text className="flex-1">{items[0]?.name}</Text>
               <Text className="text-gray-600">${items[0]?.price}.00</Text>
@@ -66,6 +68,29 @@ export default function CartScreen() {
             </View>
           ))}
         </ScrollView>
+
+        <View className="p-5 bg-white mt-5 space-y-4">
+          <View className="flex-row justify-between">
+            <Text className="text-gray-400 ">Subtotal</Text>
+            <Text className="text-gray-400 ">${cartTotal}.00</Text>
+          </View>
+
+          <View className="flex-row justify-between">
+            <Text className="text-gray-400 ">Delivery Fee</Text>
+            <Text className="text-gray-400 ">$5.99</Text>
+          </View>
+
+          <View className="flex-row justify-between">
+            <Text>Order Total</Text>
+            <Text className="font-extrabold">${cartTotal + 5.99}</Text>
+          </View>
+        </View>
+
+
+        <TouchableOpacity className="rounded-lg bg-[#00CCBB] p-4 mx-4">
+          <Text className="text-center text-white text-lg font-bold">Place Order</Text>
+        </TouchableOpacity>
+
       </View>
     </SafeAreaView>
   )
