@@ -41,10 +41,35 @@ export default function DeliveryScreen() {
         </View>
       </SafeAreaView>
 
-      <MapView>
-
+      <MapView
+        className="flex-1 -mt-10 z-0"
+        mapType="mutedStandard"
+        initialRegion={{
+          latitude: restaurant.restaurant.lat,
+          longitude: restaurant.restaurant.long,
+          latitudeDelta: 0.005,
+          longitudeDelta: 0.005,
+        }}  
+      >
+        <Marker
+          coordinate={{
+            latitude: restaurant.restaurant.lat,
+            longitude: restaurant.restaurant.long
+          }}
+          title={restaurant.restaurant.name}
+          description={restaurant.restaurant.short_description}
+          identifier="origin"
+          pinColor="#00CCBB"
+        />
       </MapView>
-
+      <SafeAreaView className="bg-white flex-row items-center space-x-5 h-28">
+        <Image className="h-12 w-12 bg-gray-300 p-4 rounded-full ml-5" source={{ uri: "https://imgur.com/oCrhunl.png"}}/>
+        <View className="flex-1">
+          <Text className="text-lg">Mark Fisher</Text>
+          <Text className="text-gray-400">Your Driver</Text>
+        </View>
+        <Text className="text-[#00CCBB] text-lg mr-5 font-bold">Call</Text>
+      </SafeAreaView>
     </View>
   )
 };
